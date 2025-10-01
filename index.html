@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tav Master Cup - Classifiche Ufficiali</title>
+    <style>
+        /* CSS per i colori e il layout */
+        :root {
+            --colore-primario: #004d40; /* Verde Scuro */
+            --colore-secondario: #ffc107; /* Oro */
+            --colore-testo-chiaro: #f0f0f0;
+            --colore-sfondo: #ffffff;
+            --colore-sfondo-sezione: #f4f4f4;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--colore-sfondo);
+            color: #333;
+        }
+
+        /* HEADER */
+        header {
+            background-color: var(--colore-primario);
+            color: var(--colore-testo-chiaro);
+            padding: 40px 0;
+            text-align: center;
+            border-bottom: 5px solid var(--colore-secondario);
+        }
+
+        header h1 {
+            font-size: 3.5em;
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            color: var(--colore-secondario);
+        }
+
+        header p {
+            font-size: 1.2em;
+            margin-top: 10px;
+            font-style: italic;
+        }
+
+        /* SEZIONI GENERALI */
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 20px;
+            background-color: var(--colore-sfondo-sezione);
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: var(--colore-primario);
+            border-bottom: 3px solid var(--colore-secondario);
+            padding-bottom: 10px;
+            margin-top: 30px;
+            font-size: 2em;
+        }
+
+        /* TABELLE */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: var(--colore-primario);
+            color: var(--colore-testo-chiaro);
+            text-transform: uppercase;
+            font-size: 0.9em;
+            letter-spacing: 0.1em;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        /* BOTTONI NAVIGAZIONE CALENDARIO */
+        .giornata-nav {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .giornata-btn {
+            background-color: var(--colore-secondario);
+            color: var(--colore-primario);
+            border: 2px solid var(--colore-primario);
+            padding: 10px 15px;
+            margin: 5px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .giornata-btn:hover {
+            background-color: var(--colore-primario);
+            color: var(--colore-secondario);
+        }
+
+        .giornata-btn.active {
+            background-color: var(--colore-primario);
+            color: var(--colore-secondario);
+            border-color: var(--colore-secondario);
+        }
+
+        /* FASE AD ELIMINAZIONE DIRETTA (BRACKET) */
+        .elimination-phase {
+            text-align: center;
+            padding: 40px 0;
+        }
+
+        .bracket-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 50px;
+            margin-top: 30px;
+        }
+
+        .semifinal, .final {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .match-up {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .team-box {
+            background-color: var(--colore-primario);
+            color: var(--colore-testo-chiaro);
+            padding: 15px 25px;
+            border-radius: 6px;
+            font-weight: bold;
+            text-transform: uppercase;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s;
+            border: 2px solid var(--colore-secondario);
+        }
+
+        .semifinal .match-up {
+            margin-bottom: 30px;
+        }
+
+        /* Connettore per la Semifinale alla Finale */
+        .connector {
+            width: 50px;
+            height: 2px;
+            background-color: var(--colore-primario);
+            position: absolute;
+            right: -50px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        
+        .final {
+            margin-left: 50px;
+        }
+        
+        /* Adattamento per dispositivi mobili */
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 2.5em;
+                letter-spacing: 3px;
+            }
+            .bracket-container {
+                flex-direction: column;
+                gap: 30px;
+            }
+            .semifinal, .final {
+                width: 100%;
+            }
+            .connector {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Tav Master Cup</h1>
+        <p>Organizzato da MariogYT</p>
+    </header>
+
+    <div class="container">
+        <h2>Squadre Partecipanti</h2>
+        <p>
+            Arsenal, Napoli Matches, Borussia Dortmund, Real Madrid.
+        </p>
+
+        ---
+
+        <h2>Calendario e Risultati (Fase a Campionato)</h2>
+        
+        <div class="giornata-nav">
+            <button class="giornata-btn active" onclick="showGiornata('g1', this)">Giornata 1</button>
+            <button class="giornata-btn" onclick="showGiornata('g2', this)">Giornata 2</button>
+            <button class="giornata-btn" onclick="showGiornata('g3', this)">Giornata 3</button>
+            <button class="giornata-btn" onclick="showGiornata('g4', this)">Giornata 4</button>
+            <button class="giornata-btn" onclick="showGiornata('g5', this)">Giornata 5</button>
+            <button class="giornata-btn" onclick="showGiornata('g6', this)">Giornata 6</button>
+        </div>
+
+        <table id="g1" class="giornata-table">
+            <thead>
+                <tr><th>Partita</th><th>Risultato</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Arsenal vs Real Madrid</td><td>6-8</td></tr>
+                <tr><td>Borussia Dortmund vs Napoli Matches</td><td>2-4</td></tr>
+            </tbody>
+        </table>
+
+        <table id="g2" class="giornata-table" style="display:none;">
+            <thead>
+                <tr><th>Partita</th><th>Risultato</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Borussia Dortmund vs Arsenal</td><td>1-7</td></tr>
+                <tr><td>Real Madrid vs Napoli Matches</td><td>7-16</td></tr>
+            </tbody>
+        </table>
+        
+        <table id="g3" class="giornata-table" style="display:none;">
+            <thead>
+                <tr><th>Partita</th><th>Risultato</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Napoli Matches vs Arsenal</td><td>7-3</td></tr>
+                <tr><td>Real Madrid vs Borussia Dortmund</td><td>4-4</td></tr>
+            </tbody>
+        </table>
+
+        <table id="g4" class="giornata-table" style="display:none;">
+            <thead>
+                <tr><th>Partita</th><th>Risultato</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Arsenal vs Napoli Matches</td><td>9-7</td></tr>
+                <tr><td>Borussia Dortmund vs Real Madrid</td><td>3-4</td></tr>
+            </tbody>
+        </table>
+
+        <table id="g5" class="giornata-table" style="display:none;">
+            <thead>
+                <tr><th>Partita</th><th>Risultato</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Arsenal vs Borussia Dortmund</td><td>2-5</td></tr>
+                <tr><td>Napoli Matches vs Real Madrid</td><td>4-2</td></tr>
+            </tbody>
+        </table>
+
+        <table id="g6" class="giornata-table" style="display:none;">
+            <thead>
+                <tr><th>Partita</th><th>Risultato</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Real Madrid vs Arsenal</td><td>1-9</td></tr>
+                <tr><td>Napoli Matches vs Borussia Dortmund</td><td>0-3 (a tavolino)</td></tr>
+            </tbody>
+        </table>
+
+        ---
+
+        <h2>Classifica</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>P</th>
+                    <th>TEAM</th>
+                    <th>PG</th>
+                    <th>V</th>
+                    <th>P</th>
+                    <th>S</th>
+                    <th>GF</th>
+                    <th>GS</th>
+                    <th><th>DR</th>
+                    <th>PT</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>1°</td><td>**Napoli Matches**</td><td>6</td><td>4</td><td>0</td><td>2</td><td>38</td><td>27</td><td>+11</td><td>**12**</td></tr>
+                <tr><td>2°</td><td>Arsenal</td><td>6</td><td>3</td><td>0</td><td>3</td><td>36</td><td>29</td><td>+7</td><td>9</td></tr>
+                <tr><td>3°</td><td>Borussia D.</td><td>6</td><td>2</td><td>1</td><td>3</td><td>18</td><td>21</td><td>-3</td><td>7</td></tr>
+                <tr><td>4°</td><td>Real Madrid</td><td>6</td><td>2</td><td>1</td><td>3</td><td>27</td><td>42</td><td>-15</td><td>6.5*</td></tr>
+            </tbody>
+        </table>
+        <p><small>*Penalizzazione di 0.5pt per non aver rispettato una regola del torneo.</small></p>
+
+        ---
+
+        <h2>Classifica Marcatori (Top 10)</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>P</th>
+                    <th>NOME</th>
+                    <th>TEAM</th>
+                    <th>GOL</th>
+                    <th>PG</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>1°</td><td>Diego Pisapia</td><td>Ars</td><td>11</td><td>6</td></tr>
+                <tr><td>2°</td><td>Rocco Livorno</td><td>BVB</td><td>9</td><td>5</td></tr>
+                <tr><td>3°</td><td>Emanuele Tesauro</td><td>NM</td><td>9</td><td>3</td></tr>
+                <tr><td>4°</td><td>Ciro Scarpato</td><td>Rma</td><td>8</td><td>3</td></tr>
+                <tr><td>5°</td><td>Pietro Trotta</td><td>Rma</td><td>7</td><td>4</td></tr>
+                <tr><td>6°</td><td>Giuseppe Palmieri</td><td>NM</td><td>7</td><td>4</td></tr>
+                <tr><td>7°</td><td>Francesco Fornaro</td><td>Ars</td><td>7</td><td>5</td></tr>
+                <tr><td>8°</td><td>Antonio Corcione</td><td>Ars</td><td>7</td><td>5</td></tr>
+                <tr><td>9°</td><td>Luca Di Tuccio</td><td>NM</td><td>5</td><td>3</td></tr>
+                <tr><td>10°</td><td>Gabriele Rossini</td><td>NM</td><td>4</td><td>4</td></tr>
+            </tbody>
+        </table>
+
+        ---
+
+        <h2>Classifica Assistman (Top 10)</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>P</th>
+                    <th>NOME</th>
+                    <th>TEAM</th>
+                    <th>ASSIST</th>
+                    <th>PG</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>1°</td><td>Antonio Corcione</td><td>Ars</td><td>5</td><td>5</td></tr>
+                <tr><td>2°</td><td>Giacomo Intiso</td><td>Ars</td><td>4</td><td>5</td></tr>
+                <tr><td>3°</td><td>Diego Pisapia</td><td>Ars</td><td>4</td><td>6</td></tr>
+                <tr><td>4°</td><td>Lorenzo Terracciano</td><td>Ars</td><td>4</td><td>4</td></tr>
+                <tr><td>5°</td><td>Pietro Trotta</td><td>Rma</td><td>3</td><td>4</td></tr>
+                <tr><td>6°</td><td>Sandro Colella</td><td>NM</td><td>2</td><td>2</td></tr>
+                <tr><td>7°</td><td>Ciro Scarpato</td><td>Rma</td><td>2</td><td>3</td></tr>
+                <tr><td>8°</td><td>Giuseppe Palmieri</td><td>NM</td><td>2</td><td>4</td></tr>
+                <tr><td>9°</td><td>Francesco Fornaro</td><td>Ars</td><td>2</td><td>5</td></tr>
+                <tr><td>10°</td><td>Emanuele Tesauro</td><td>NM</td><td>2</td><td>3</td></tr>
+            </tbody>
+        </table>
+
+        ---
+
+        <h2>Classifica Portieri</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>P</th>
+                    <th>NOME</th>
+                    <th>TEAM</th>
+                    <th>GOL SUBITI</th>
+                    <th>PG</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>1°</td><td>Christian Ianiello</td><td>BVB</td><td>21</td><td>5</td></tr>
+                <tr><td>2°</td><td>Daniel Paudice</td><td>NM</td><td>24</td><td>5</td></tr>
+                <tr><td>3°</td><td>Simone Argenziano</td><td>Ars</td><td>29</td><td>5</td></tr>
+                <tr><td>4°</td><td>Salvatore Giustezza</td><td>Rma</td><td>42</td><td>6</td></tr>
+            </tbody>
+        </table>
+
+        ---
+
+        <div class="container elimination-phase">
+            <h2>Fase ad Eliminazione Diretta 🏆</h2>
+            <div class="bracket-container">
+                
+                <div class="semifinal">
+                    <div class="match-up">
+                        <div class="team-box">Arsenal</div>
+                        <div class="team-box">Borussia Dortmund</div>
+                        <div class="connector"></div>
+                    </div>
+                </div>
+
+                <div class="final">
+                    <div class="match-up">
+                        <div class="team-box">Napoli Matches</div>
+                        <div class="team-box">Vincitrice Semifinale</div>
+                    </div>
+                </div>
+
+            </div>
+            <p style="margin-top: 50px;">
+                La finale della Tav Master Cup si avvicina!
+            </p>
+        </div>
+
+    </div>
+
+    <script>
+        // Funzione JavaScript per mostrare la giornata selezionata
+        function showGiornata(giornataId, clickedButton) {
+            // Nasconde tutte le tabelle delle giornate
+            const tabelle = document.querySelectorAll('.giornata-table');
+            tabelle.forEach(table => {
+                table.style.display = 'none';
+            });
+
+            // Rimuove la classe 'active' da tutti i pulsanti
+            const buttons = document.querySelectorAll('.giornata-btn');
+            buttons.forEach(button => {
+                button.classList.remove('active');
+            });
+
+            // Mostra la tabella della giornata selezionata
+            document.getElementById(giornataId).style.display = 'table';
+
+            // Aggiunge la classe 'active' al pulsante cliccato
+            clickedButton.classList.add('active');
+        }
+
+        // Assicurati che la Giornata 1 sia visibile all'inizio
+        document.addEventListener('DOMContentLoaded', () => {
+             // Fa in modo che la Giornata 1 sia selezionata e visibile quando la pagina viene caricata
+             const g1Button = document.querySelector('.giornata-btn');
+             if(g1Button) {
+                // Esegui la funzione per mostrare g1
+                showGiornata('g1', g1Button); 
+             }
+        });
+    </script>
+</body>
+</html>
