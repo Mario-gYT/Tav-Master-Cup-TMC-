@@ -94,14 +94,14 @@
             background-color: #f9f9f9;
         }
         
-        /* Stile per i risultati cliccabili */
-        .clickable-result {
+        /* Stile per i risultati cliccabili e nomi squadra */
+        .clickable-result, .clickable-team-name {
             cursor: pointer;
             font-weight: bold;
             color: var(--colore-primario);
             transition: color 0.2s;
         }
-        .clickable-result:hover {
+        .clickable-result:hover, .clickable-team-name:hover {
             color: var(--colore-secondario);
         }
         
@@ -133,8 +133,62 @@
             color: var(--colore-secondario);
             border-color: var(--colore-secondario);
         }
+        
+        /* NOTIZIE SECTION STYLES (NUOVO) */
+        .news-section {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-top: 20px;
+            overflow: hidden;
+            background-color: white;
+        }
 
-        /* FASE AD ELIMINAZIONE DIRETTA (BRACKET) */
+        .news-toggle-btn {
+            width: 100%;
+            background-color: var(--colore-secondario);
+            color: var(--colore-primario);
+            border: none;
+            padding: 15px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            text-align: center;
+        }
+
+        .news-toggle-btn:hover {
+            background-color: #ffda6a;
+        }
+
+        .news-content {
+            padding: 0;
+            max-height: 0;
+            overflow-y: scroll; /* Rende il contenuto scorrevole se troppo lungo */
+            transition: max-height 0.7s ease-in-out;
+        }
+        
+        .news-content.active {
+            max-height: 500px; /* Altezza sufficiente per mostrare il contenuto e la barra di scorrimento */
+            padding: 15px;
+        }
+
+        .news-item {
+            padding: 10px 0;
+            border-bottom: 1px dashed #ccc;
+        }
+        
+        .news-item:last-child {
+            border-bottom: none;
+        }
+        
+        .news-date {
+            font-weight: bold;
+            color: var(--colore-primario);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* FASE AD ELIMINAZIONE DIRETTA (BRACKET) - STILI PRECEDENTI */
         .elimination-phase {
             text-align: center;
             padding: 40px 0;
@@ -221,10 +275,24 @@
     <div class="container">
         <h2>Squadre Partecipanti</h2>
         <p>
-            Arsenal, Napoli Matches, Borussia Dortmund, Real Madrid.
+            <span class="clickable-team-name" onclick="showTeamDetails('Arsenal')">Arsenal</span>, 
+            <span class="clickable-team-name" onclick="showTeamDetails('Napoli Matches')">Napoli Matches</span>, 
+            <span class="clickable-team-name" onclick="showTeamDetails('Borussia Dortmund')">Borussia Dortmund</span>, 
+            <span class="clickable-team-name" onclick="showTeamDetails('Real Madrid')">Real Madrid</span>.
         </p>
 
-        ---
+        <hr>
+
+        <h2>NOTIZIE TAV MASTER CUP 📢</h2>
+        <div class="news-section">
+            <button class="news-toggle-btn" onclick="toggleNews()">
+                Clicca per vedere le notizie ufficiali della TMC
+            </button>
+            <div id="news-content" class="news-content">
+                </div>
+        </div>
+
+        <hr>
 
         <h2>Calendario e Risultati (Fase a Campionato)</h2>
         
@@ -266,7 +334,7 @@
                 <tr><td>Real Madrid vs Borussia Dortmund</td><td class="clickable-result" onclick="showMarcatori('g3-p2')">4-4</td></tr>
             </tbody>
         </table>
-
+        
         <table id="g4" class="giornata-table" style="display:none;">
             <thead>
                 <tr><th>Partita</th><th>Risultato (Clicca per Marcatori)</th></tr>
@@ -276,7 +344,7 @@
                 <tr><td>Borussia Dortmund vs Real Madrid</td><td class="clickable-result" onclick="showMarcatori('g4-p2')">3-4</td></tr>
             </tbody>
         </table>
-
+        
         <table id="g5" class="giornata-table" style="display:none;">
             <thead>
                 <tr><th>Partita</th><th>Risultato (Clicca per Marcatori)</th></tr>
@@ -297,7 +365,7 @@
             </tbody>
         </table>
 
-        ---
+        <hr>
 
         <h2>Classifica</h2>
         <table>
@@ -373,7 +441,7 @@
         </table>
         <p><small>*Penalizzazione di 0.5pt per non aver rispettato una regola del torneo.</small></p>
 
-        ---
+        <hr>
 
         <h2>Classifica Marcatori (Top 10)</h2>
         <table>
@@ -400,7 +468,7 @@
             </tbody>
         </table>
 
-        ---
+        <hr>
 
         <h2>Classifica Assistman (Top 10)</h2>
         <table>
@@ -427,7 +495,7 @@
             </tbody>
         </table>
 
-        ---
+        <hr>
 
         <h2>Classifica Portieri</h2>
         <table>
@@ -448,7 +516,7 @@
             </tbody>
         </table>
 
-        ---
+        <hr>
 
         <div class="container elimination-phase">
             <h2>Fase ad Eliminazione Diretta 🏆</h2>
@@ -478,7 +546,224 @@
     </div>
 
     <script>
-        // Mappa dei marcatori per ogni partita, usando l'ID della partita come chiave
+        // DATI SQUADRE PER AGGIORNAMENTO 1
+        const teamsData = {
+            'Arsenal': {
+                rosa: [
+                    'Nr. 1 Simone Argenziano - Portiere',
+                    'Nr. 3 Francesco Giobbe - Portiere/Difensore',
+                    'Nr. 111 Biagio Saccone - Portiere',
+                    'Nr. 2 Carmine Bocchetti - Difensore',
+                    'Nr. 4 Alfredo Murano - Difensore',
+                    'Nr. 17 Davide Tene - Difensore',
+                    'Nr. 7 Diego Pisapia - Centrocampista (Capitano)',
+                    'Nr. 10 Lorenzo Terracciano - Centrocampista',
+                    'Nr. 11 Francesco Fornaro - Centrocampista',
+                    'Nr. 14 Antonio Corcione - Centrocampista',
+                    'Nr. 5 Giacomo Intiso - Attaccante',
+                    'Nr. 20 Francesco Napolitano - Attacante'
+                ],
+                risultati: [
+                    'Real Madrid 1-9 Arsenal',
+                    'Arsenal 2-5 Borussia Dortmund',
+                    'Arsenal 9-7 Napoli Matches'
+                ],
+                statistiche: {
+                    golFatti: 6,
+                    golSubiti: 4.83,
+                    punti: 1.5
+                }
+            },
+            'Borussia Dortmund': {
+                rosa: [
+                    'Nr. 1 Christian Ianiello - Portiere',
+                    'Nr. 10 Gabriele Bruno - Difensore (Capitano)',
+                    'Nr. 16 Gennaro Ariosto - Difensore',
+                    'Nr. 17 Antonio Troise - Difensore',
+                    'Nr. 22 Francesco Livorno - Difensore',
+                    'Nr. 11 Raffaele Caiazzo - Centrocampista',
+                    'Nr. 15 Gennaro Cozzolino',
+                    'Nr. 33 Giovanni D\'andrea',
+                    'Nr. 9 Kevin Alberobello',
+                    'Nr. 14 Daniele Rasino',
+                    'Nr. 77 Rocco Livorno'
+                ],
+                risultati: [
+                    'Napoli Matches 0-3 Borussia Dortmund (a tavolino)',
+                    'Arsenal 2-5 Borussia Dortmund',
+                    'Borussia Dortmund 3-4 Real Madrid'
+                ],
+                statistiche: {
+                    golFatti: 3,
+                    golSubiti: 3.5,
+                    punti: 1.16
+                }
+            },
+            'Napoli Matches': {
+                rosa: [
+                    'Nr. 1 Daniele Paudice - Portiere',
+                    'Nr. 4 Mario Di Maro - Difensore',
+                    'Nr. 5 Luca Di Tuccio - Difensore',
+                    'Nr. 21 Massimo Fuschetto - Difensore',
+                    'Nr. 78 Sandro Colella - Difensore',
+                    'Nr. 8 Yuri Donnarumma - Centrocampista',
+                    'Nr. 10 Alessandro Sanchez - Centrocampista',
+                    'Nr. 11 Lorenzo Molino - Centrocampista',
+                    'Nr. 14 Emanuele Tesauro',
+                    'Nr. 24 Samuele Rea',
+                    'Nr. 27 Benedetto Leanza - Centrocampista',
+                    'Nr. 77 Mario Gatta - Centrocampista (Capitano)',
+                    'Nr. 91 Alex Ciocia - Centrocampista',
+                    'Nr. 7 Giovanni Atzori - Attaccante',
+                    'Nr. 69 Gabriele Rossini - Attaccante'
+                ],
+                risultati: [
+                    'Napoli Matches 0-3 Borussia Dortmund (a tavolino)',
+                    'Napoli Matches 4-3 Real Madrid',
+                    'Arsenal 9-7 Napoli Matches'
+                ],
+                statistiche: {
+                    golFatti: 6.33,
+                    golSubiti: 4.5,
+                    punti: 2
+                }
+            },
+            'Real Madrid': {
+                rosa: [
+                    'Nr. 16 Salvatore Giustezza - Portiere',
+                    'Nr. 5 Umberto Corcione - Difensore',
+                    'Nr. 21 Sabino Corcione - Difensore (Capitano)',
+                    'Nr. 23 Niccolò Virno - Difensore',
+                    'Nr. 27 Giuseppe Provvidera - Difensore',
+                    'Nr. 86 Giuseppe Cacace - Difensore',
+                    'Nr. 30 Pietro Trotta - Centrocampista',
+                    'Nr. 56 Luigi Colamatteo - Centrocampista',
+                    'Nr. 87 Giovanni Beneduce - Centrocampista',
+                    'Nr. 99 Gianluigi Isaia - Attaccante',
+                    'Nr. 7 Ciro Scarpato - Attaccante',
+                    'Nr. 10 Anthony Russo - Attacante'
+                ],
+                risultati: [
+                    'Real Madrid 1-9 Arsenal',
+                    'Napoli Matches 4-3 Real Madrid',
+                    'Borussia Dortmund 3-4 Real Madrid'
+                ],
+                statistiche: {
+                    golFatti: 4.5,
+                    golSubiti: 6.83,
+                    punti: 1.08
+                },
+                eliminato: true // Flag per ricordare che sono eliminati
+            }
+        };
+
+        function showTeamDetails(teamName) {
+            const data = teamsData[teamName];
+            if (!data) return;
+
+            // 1. Rosa
+            const rosaHtml = '⚽ ROSA ATTUALE (' + data.rosa.length + ' Giocatori):\n' + data.rosa.join('\n');
+
+            // 2. Risultati
+            const risultatiHtml = '\n\n🗓 ULTIMI 3 RISULTATI:\n' + data.risultati.join('\n');
+
+            // 3. Statistiche
+            const statisticheHtml = '\n\n📊 STATISTICHE (Media per Partita):\n' +
+                'Media Gol Fatti: ' + data.statistiche.golFatti + '\n' +
+                'Media Gol Subiti: ' + data.statistiche.golSubiti + '\n' +
+                'Media Punti: ' + data.statistiche.punti + 'pt';
+
+            const eliminatoMessage = data.eliminato ? "\n\n⚠️ SQUADRA ELIMINATA ALLA FASE 1" : "";
+
+            alert('*** DETTAGLI SQUADRA: ' + teamName.toUpperCase() + ' ***\n' +
+                eliminatoMessage +
+                '\n' + rosaHtml +
+                risultatiHtml +
+                statisticheHtml);
+        }
+
+        // DATI NOTIZIE PER AGGIORNAMENTO 2 (Dalla più recente alla meno recente)
+        const newsData = [
+            { data: '30 settembre 2025', testo: 'Tav Mercato chiuso, è durato dal 08/07 al 30/09' },
+            { data: '21 settembre 2025', testo: 'Carmine Bocchetti all\'Arsenal (acquisto)' },
+            { data: '21 settembre 2025', testo: 'Francesco Napolitano all\'Arsenal (acquisto)' },
+            { data: '20 settembre 2025', testo: 'Il Napoli Matches è matematicamente in finale di TMC' },
+            { data: '19 settembre 2025', testo: 'Gianluigi Isaia al Real Madrid (acquisto)' },
+            { data: '16 settembre 2025', testo: 'Benedetto Leanza al Napoli Matches (acquisto)' },
+            { data: '9 settembre 2025', testo: 'Real Madrid penalizzato di 0.5pt in classifica, visto che Giuseppe Cacace ha giocato 9 su 10 minuti richiesti' },
+            { data: '7 settembre 2025', testo: 'Giuseppe Provvidera al Real Madrid (acquisto)' },
+            { data: '7 settembre 2025', testo: 'Gennaro Ariosto al Borussia Dortmund (acquisto)' },
+            { data: '7 settembre 2025', testo: 'Gennaro Cozzolino al Borussia Dortmuns (acquisto)' },
+            { data: '7 settembre 2025', testo: 'Giuseppe Cacace torna al Real Madrid (acquisto)' },
+            { data: '3 settembre 2025', testo: 'Alessandro Sanchez al Napoli Matches (acquisto)' },
+            { data: '3 settembre 2025', testo: 'Lorenzo Molino al Napoli Matches (acquisto)' },
+            { data: '3 settembre 2025', testo: 'Anthony Russo al Real Madrid (acquisto)' },
+            { data: '3 settembre 2025', testo: 'Giovanni Beneduce al Real Madrid (acquisto)' },
+            { data: '3 settembre 2025', testo: 'Luigi Colamatteo al Real Madrid (acquisto)' },
+            { data: '2 settembre 2025', testo: 'Giuseppe Palmieri svincolato dal Napoli Matches (svincolo)' },
+            { data: '2 settembre 2025', testo: 'Vittorio Manna svincolato del Real Madrid (svincolo)' },
+            { data: '2 settembre 2025', testo: 'Ogni squadra non avrà più a disposizione 5 acquisti e 5 svincoli ma ben 6, e ogni squadra potrà avere massimo 15 giocatori in rosa' },
+            { data: '12 agosto 2025', testo: 'Francesco Falanga svincolato dall\'Arsenal (svincolo)' },
+            { data: '12 agosto 2025', testo: 'Derlyn Feliz svincolato dall\'Arsenal (svincolo)' },
+            { data: '11 agosto 2025', testo: 'Pasquale Viscido svincolato dal Borussia Dortmund (svincolo)' },
+            { data: '11 agosto 2025', testo: 'Luca Sposito svincolato dal Borussia Dortmund (svincolo)' },
+            { data: '6 agosto 2025', testo: 'Iniziano le vacanze estive, non si giocheranno partite dal 6/08 al 2/09' },
+            { data: '24 luglio 2025', testo: 'Giuseppe Palmieri e Diego Pisapia raggiungo 60 gol in tutte le competizioni dalla FCL (2023) fino al 24/07/2025' },
+            { data: '18 luglio 2025', testo: 'Francesco Giobbe all\'Arsenal (acquisto)' },
+            { data: '18 luglio 2025', testo: 'Alex Ciocia al Napoli Matches (acquisto)' },
+            { data: '18 luglio 2025', testo: 'Emanuele Morra svincolato dal Napoli Matches (svincolo) *non contato come svincolo visto che era un portiere' },
+            { data: '13 luglio 2025', testo: 'Biagio Saccone all\'Arsenal (acquisto) *non contato come svincolo visto che è un portiere' },
+            { data: '12 luglio 2025', testo: 'Gabriele Rossini al Napoli Matches (acquisto)' },
+            { data: '12 luglio 2025', testo: 'Sandro Colella al Napoli Matches (acquisto)' },
+            { data: '9 luglio 2025', testo: 'Emilio Madonna svincolato dal Real Madrid (svincolo)' },
+            { data: '9 luglio 2025', testo: 'Giuseppe Cacace svincolato dal Real Madrid (svincolo)' },
+            { data: '9 luglio 2025', testo: 'Francesco Giobbe svincolato dal Real Madrid (svincolo)' },
+            { data: '9 luglio 2025', testo: 'Angelo Addeo svincolato dal Real Madrid (svincolo)' },
+            { data: '9 luglio 2025', testo: 'Gabriele Rossino svincolato dal Real Madrid (svincolo)' },
+            { data: '8 luglio 2025', testo: 'L\'Arsenal acquista dal Napoli Matches Francesco Fornaro, sarà a disposizione dei biancorossi dalla quinta giornata' },
+            { data: '8 luglio 2025', testo: 'Gli acquisti e svincoli per ogni squadra passano da 3 a 5! Mentre i giocatori per rosa da 13 massimi a 14!' },
+            { data: '8 luglio 2025', testo: 'Aperto il TavMecato!' },
+            { data: '4 luglio 2025', testo: 'Prima dell\'inizio della partita valida per la 3a giornata, tra Nm e Ars, verrà fatto un minuto di silenzio per ricordare Diogo e André Jota' },
+            { data: '30 maggio 2025', testo: 'INIZIA LA TAV MASTER CUP!' },
+            { data: '29 maggio 2025', testo: 'Il giorno 30/05 inizierà la TMC con Arsenal vs Real Madrid' },
+            { data: '28 maggio 2025', testo: 'La coppa del torneo è arrivata!' },
+            { data: '16 maggio 2025', testo: 'Samuele Rea al Napoli Matches (acquisto)' },
+            { data: '5 aprile 2025', testo: 'Ufficializzato il calendario della TAV MASTER CUP' },
+            { data: '23 marzo 2025', testo: 'L\'Arsenal acquista dal Napoli Matches Antonio Corcione' },
+            { data: '22 marzo 2025', testo: 'Inizia il progetto della TAV MASTER CUP' }
+        ];
+
+        // Funzione per generare e mostrare le notizie
+        function generateNews() {
+            const newsContainer = document.getElementById('news-content');
+            let newsHtml = '';
+
+            newsData.forEach(item => {
+                newsHtml += `
+                    <div class="news-item">
+                        <span class="news-date">🗓 ${item.data}</span>
+                        <span>${item.testo}</span>
+                    </div>
+                `;
+            });
+
+            newsContainer.innerHTML = newsHtml;
+        }
+        
+        // Funzione per espandere/comprimere la sezione Notizie
+        function toggleNews() {
+            const content = document.getElementById('news-content');
+            content.classList.toggle('active');
+            
+            const button = document.querySelector('.news-toggle-btn');
+            if (content.classList.contains('active')) {
+                button.textContent = 'Clicca per NASCONDERE le notizie ufficiali della TMC';
+            } else {
+                button.textContent = 'Clicca per vedere le notizie ufficiali della TMC';
+            }
+        }
+        
+        // Mappa dei marcatori (Mantenuta inalterata)
         const marcatoriPartite = {
             'g1-p1': "Arsenal 6-8 Real Madrid\n\nARS: Diego Pisapia (x2), Derlyn Feliz (x2), Lorenzo Terracciano (x1), Davide Tene (x1)\n\nRMA: Pietro Trotta (x5), Ciro Scarpato (x1), Sabino Corcione (x1), Gabriele Rossini (x1)",
             'g1-p2': "Borussia Dortmund 2-4 Napoli Matches\n\nBVB: Raffaele Caiazzo (x1), Rocco Livorno (x1)\n\nNM: Francesco Fornaro (x3), Emanuele Tesauro (x1)",
@@ -499,7 +784,7 @@
             'g6-p2': "Napoli Matches 0-3 Borussia Dortmund (A Tavolino)\n\nMarcatori non assegnati.",
         };
 
-        // Funzione JavaScript per mostrare i marcatori della partita cliccata
+        // Funzione JavaScript per mostrare i marcatori della partita cliccata (Mantenuta inalterata)
         function showMarcatori(partitaId) {
             const marcatori = marcatoriPartite[partitaId];
             if (marcatori) {
@@ -508,7 +793,7 @@
             }
         }
         
-        // Funzione JavaScript per mostrare la giornata selezionata
+        // Funzione JavaScript per mostrare la giornata selezionata (Mantenuta inalterata)
         function showGiornata(giornataId, clickedButton) {
             // Nasconde tutte le tabelle delle giornate
             const tabelle = document.querySelectorAll('.giornata-table');
@@ -529,16 +814,18 @@
             clickedButton.classList.add('active');
         }
 
-        // Assicurati che la Giornata 1 sia visibile all'inizio
+        // Esegue le funzioni all'avvio della pagina
         document.addEventListener('DOMContentLoaded', () => {
-             // Fa in modo che la Giornata 1 sia selezionata e visibile quando la pagina viene caricata
+             // 1. Genera le Notizie
+             generateNews();
+             
+             // 2. Assicurati che la Giornata 1 sia visibile
              const g1Button = document.querySelector('.giornata-btn');
              if(g1Button) {
-                // Esegui la funzione per mostrare g1
-                showGiornata('g1', g1Button); 
+                 // Esegui la funzione per mostrare g1
+                 showGiornata('g1', g1Button); 
              }
         });
     </script>
 </body>
 </html>
-
