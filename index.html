@@ -94,6 +94,17 @@
             background-color: #f9f9f9;
         }
         
+        /* Stile per i risultati cliccabili */
+        .clickable-result {
+            cursor: pointer;
+            font-weight: bold;
+            color: var(--colore-primario);
+            transition: color 0.2s;
+        }
+        .clickable-result:hover {
+            color: var(--colore-secondario);
+        }
+        
         /* BOTTONI NAVIGAZIONE CALENDARIO */
         .giornata-nav {
             text-align: center;
@@ -228,61 +239,61 @@
 
         <table id="g1" class="giornata-table">
             <thead>
-                <tr><th>Partita</th><th>Risultato</th></tr>
+                <tr><th>Partita</th><th>Risultato (Clicca per Marcatori)</th></tr>
             </thead>
             <tbody>
-                <tr><td>Arsenal vs Real Madrid</td><td>6-8</td></tr>
-                <tr><td>Borussia Dortmund vs Napoli Matches</td><td>2-4</td></tr>
+                <tr><td>Arsenal vs Real Madrid</td><td class="clickable-result" onclick="showMarcatori('g1-p1')">6-8</td></tr>
+                <tr><td>Borussia Dortmund vs Napoli Matches</td><td class="clickable-result" onclick="showMarcatori('g1-p2')">2-4</td></tr>
             </tbody>
         </table>
 
         <table id="g2" class="giornata-table" style="display:none;">
             <thead>
-                <tr><th>Partita</th><th>Risultato</th></tr>
+                <tr><th>Partita</th><th>Risultato (Clicca per Marcatori)</th></tr>
             </thead>
             <tbody>
-                <tr><td>Borussia Dortmund vs Arsenal</td><td>1-7</td></tr>
-                <tr><td>Real Madrid vs Napoli Matches</td><td>7-16</td></tr>
+                <tr><td>Borussia Dortmund vs Arsenal</td><td class="clickable-result" onclick="showMarcatori('g2-p1')">1-7</td></tr>
+                <tr><td>Real Madrid vs Napoli Matches</td><td class="clickable-result" onclick="showMarcatori('g2-p2')">7-16</td></tr>
             </tbody>
         </table>
         
         <table id="g3" class="giornata-table" style="display:none;">
             <thead>
-                <tr><th>Partita</th><th>Risultato</th></tr>
+                <tr><th>Partita</th><th>Risultato (Clicca per Marcatori)</th></tr>
             </thead>
             <tbody>
-                <tr><td>Napoli Matches vs Arsenal</td><td>7-3</td></tr>
-                <tr><td>Real Madrid vs Borussia Dortmund</td><td>4-4</td></tr>
+                <tr><td>Napoli Matches vs Arsenal</td><td class="clickable-result" onclick="showMarcatori('g3-p1')">7-3</td></tr>
+                <tr><td>Real Madrid vs Borussia Dortmund</td><td class="clickable-result" onclick="showMarcatori('g3-p2')">4-4</td></tr>
             </tbody>
         </table>
 
         <table id="g4" class="giornata-table" style="display:none;">
             <thead>
-                <tr><th>Partita</th><th>Risultato</th></tr>
+                <tr><th>Partita</th><th>Risultato (Clicca per Marcatori)</th></tr>
             </thead>
             <tbody>
-                <tr><td>Arsenal vs Napoli Matches</td><td>9-7</td></tr>
-                <tr><td>Borussia Dortmund vs Real Madrid</td><td>3-4</td></tr>
+                <tr><td>Arsenal vs Napoli Matches</td><td class="clickable-result" onclick="showMarcatori('g4-p1')">9-7</td></tr>
+                <tr><td>Borussia Dortmund vs Real Madrid</td><td class="clickable-result" onclick="showMarcatori('g4-p2')">3-4</td></tr>
             </tbody>
         </table>
 
         <table id="g5" class="giornata-table" style="display:none;">
             <thead>
-                <tr><th>Partita</th><th>Risultato</th></tr>
+                <tr><th>Partita</th><th>Risultato (Clicca per Marcatori)</th></tr>
             </thead>
             <tbody>
-                <tr><td>Arsenal vs Borussia Dortmund</td><td>2-5</td></tr>
-                <tr><td>Napoli Matches vs Real Madrid</td><td>4-2</td></tr>
+                <tr><td>Arsenal vs Borussia Dortmund</td><td class="clickable-result" onclick="showMarcatori('g5-p1')">2-5</td></tr>
+                <tr><td>Napoli Matches vs Real Madrid</td><td class="clickable-result" onclick="showMarcatori('g5-p2')">4-3</td></tr>
             </tbody>
         </table>
 
         <table id="g6" class="giornata-table" style="display:none;">
             <thead>
-                <tr><th>Partita</th><th>Risultato</th></tr>
+                <tr><th>Partita</th><th>Risultato (Clicca per Marcatori)</th></tr>
             </thead>
             <tbody>
-                <tr><td>Real Madrid vs Arsenal</td><td>1-9</td></tr>
-                <tr><td>Napoli Matches vs Borussia Dortmund</td><td>0-3 (a tavolino)</td></tr>
+                <tr><td>Real Madrid vs Arsenal</td><td class="clickable-result" onclick="showMarcatori('g6-p1')">1-9</td></tr>
+                <tr><td>Napoli Matches vs Borussia Dortmund</td><td class="clickable-result" onclick="showMarcatori('g6-p2')">0-3 (a tavolino)</td></tr>
             </tbody>
         </table>
 
@@ -292,7 +303,8 @@
         <table>
             <thead>
                 <tr>
-                    <th>FASE</th> <th>P</th>
+                    <th>FASE</th>
+                    <th>P</th>
                     <th>TEAM</th>
                     <th>PG</th>
                     <th>V</th>
@@ -300,14 +312,15 @@
                     <th>S</th>
                     <th>GF</th>
                     <th>GS</th>
-                    <th>DR</th> <th>PT</th>
+                    <th>DR</th>
+                    <th>PT</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <td>FINALE</td>
                     <td>1°</td>
-                    <td>Napoli Matches</td>
+                    <td>**Napoli Matches**</td>
                     <td>6</td>
                     <td>4</td>
                     <td>0</td>
@@ -315,7 +328,8 @@
                     <td>38</td>
                     <td>27</td>
                     <td>+11</td>
-                    <td>12</td> </tr>
+                    <td>**12**</td>
+                </tr>
                 <tr>
                     <td>SEMIFINALE</td>
                     <td>2°</td>
@@ -464,6 +478,36 @@
     </div>
 
     <script>
+        // Mappa dei marcatori per ogni partita, usando l'ID della partita come chiave
+        const marcatoriPartite = {
+            'g1-p1': "Arsenal 6-8 Real Madrid\n\nARS: Diego Pisapia (x2), Derlyn Feliz (x2), Lorenzo Terracciano (x1), Davide Tene (x1)\n\nRMA: Pietro Trotta (x5), Ciro Scarpato (x1), Sabino Corcione (x1), Gabriele Rossini (x1)",
+            'g1-p2': "Borussia Dortmund 2-4 Napoli Matches\n\nBVB: Raffaele Caiazzo (x1), Rocco Livorno (x1)\n\nNM: Francesco Fornaro (x3), Emanuele Tesauro (x1)",
+            
+            'g2-p1': "Borussia Dortmund 1-7 Arsenal\n\nBVB: Rocco Livorno (x1)\n\nARS: Antonio Corcione (x2), Giacomo Intiso (x1), Lorenzo Terracciano (x1), Diego Pisapia (x1), Derlyn Feliz (x1), Autogol Raffaele Caiazzo (x1)",
+            'g2-p2': "Real Madrid 7-16 Napoli Matches\n\nRMA: Pietro Trotta (x2), Gabriele Rossini (x2), Angelo Addeo (x1), Francesco Giobbe (x1), Autogol Mario Di Maro (x1)\n\nNM: Giuseppe Palmieri (x6), Emanuele Tesauro (x4), Luca Di Tuccio (x3), Mario Gatta (x1), Autogol Sabino Corcione (x1)",
+            
+            'g3-p1': "Napoli Matches 7-3 Arsenal\n\nNM: Emanuele Tesauro (x4), Luca Di Tuccio (x2), Francesco Fornaro (x1)\n\nARS: Lorenzo Terracciano (x1), Antonio Corcione (x1), Davide Tene (x1)",
+            'g3-p2': "Real Madrid 4-4 Borussia Dortmund\n\nRMA: Ciro Scarpato (x4)\n\nBVB: Rocco Livorno (x3), Giovanni D'Andrea (x1)",
+            
+            'g4-p1': "Arsenal 9-7 Napoli Matches\n\nARS: Diego Pisapia (x4), Antonio Corcione (x2), Giacomo Intiso (x1), Derlyn Feliz (x1), Autogol Daniele Paudice (x1)\n\nNM: Francesco Fornaro (x2), Samuele Rea (x1), Gabriele Rossini (x1), Sandro Colella (x1), Giuseppe Palmieri (x1), Autogol Alfredo Murano (x1)",
+            'g4-p2': "Borussia Dortmund 3-4 Real Madrid\n\nBVB: Rocco Livorno (x2), Raffaele Caiazzo (x1)\n\nRMA: Ciro Scarpato (x3), Anthony Russo (x1)",
+            
+            'g5-p1': "Arsenal 2-5 Borussia Dortmund\n\nARS: Diego Pisapia (x1), Autogol Antonio Troise (x1)\n\nBVB: Daniele Rasino (x2), Rocco Livorno (x2), Gennaro Cozzolino (x1)",
+            'g5-p2': "Napoli Matches 4-3 Real Madrid\n\nNM: Alessandro Sanchez (x1), Lorenzo Molino (x1), Sandro Colella (x1), Mario Gatta (x1)\n\nRMA: Gianluigi Isaia (x2), Sabino Corcione (x1)",
+            
+            'g6-p1': "Real Madrid 1-9 Arsenal\n\nRMA: Anthony Russo (x1)\n\nARS: Diego Pisapia (x3), Antonio Corcione (x2), Carmine Bocchetti (x1), Lorenzo Terracciano (x1), Francesco Fornaro (x1), Autogol Giuseppe D'Alessandro (x1)",
+            'g6-p2': "Napoli Matches 0-3 Borussia Dortmund (A Tavolino)\n\nMarcatori non assegnati.",
+        };
+
+        // Funzione JavaScript per mostrare i marcatori della partita cliccata
+        function showMarcatori(partitaId) {
+            const marcatori = marcatoriPartite[partitaId];
+            if (marcatori) {
+                // Utilizza un alert semplice per mostrare i marcatori
+                alert("⚽ MARCATORI ⚽\n\n" + marcatori);
+            }
+        }
+        
         // Funzione JavaScript per mostrare la giornata selezionata
         function showGiornata(giornataId, clickedButton) {
             // Nasconde tutte le tabelle delle giornate
@@ -497,4 +541,3 @@
     </script>
 </body>
 </html>
-
