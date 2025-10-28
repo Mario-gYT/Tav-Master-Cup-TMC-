@@ -134,7 +134,7 @@
             border-color: var(--colore-secondario);
         }
         
-        /* NOTIZIE SECTION STYLES (NUOVO) */
+        /* NOTIZIE SECTION STYLES */
         .news-section {
             border: 1px solid #ddd;
             border-radius: 5px;
@@ -163,12 +163,12 @@
         .news-content {
             padding: 0;
             max-height: 0;
-            overflow-y: scroll; /* Rende il contenuto scorrevole se troppo lungo */
+            overflow-y: scroll;
             transition: max-height 0.7s ease-in-out;
         }
         
         .news-content.active {
-            max-height: 500px; /* Altezza sufficiente per mostrare il contenuto e la barra di scorrimento */
+            max-height: 500px;
             padding: 15px;
         }
 
@@ -188,7 +188,7 @@
             margin-bottom: 5px;
         }
 
-        /* FASE AD ELIMINAZIONE DIRETTA (BRACKET) - STILI PRECEDENTI */
+        /* FASE AD ELIMINAZIONE DIRETTA (BRACKET) */
         .elimination-phase {
             text-align: center;
             padding: 40px 0;
@@ -213,18 +213,51 @@
             display: flex;
             flex-direction: column;
             gap: 10px;
+            padding: 10px; /* Aggiunto padding per il risultato */
+            border: 2px solid var(--colore-primario);
+            border-radius: 8px;
+            background-color: white;
         }
-
+        
+        /* Box per la singola squadra nel bracket */
         .team-box {
             background-color: var(--colore-primario);
             color: var(--colore-testo-chiaro);
-            padding: 15px 25px;
-            border-radius: 6px;
+            padding: 10px 15px; /* Riduci il padding */
+            border-radius: 4px; /* Riduci il border-radius */
             font-weight: bold;
             text-transform: uppercase;
             box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
             transition: transform 0.2s;
             border: 2px solid var(--colore-secondario);
+            font-size: 0.9em;
+        }
+        
+        /* Stile per il risultato della Semifinale (NUOVO) */
+        .semifinal-result {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: var(--colore-primario);
+            margin: 10px 0;
+            border-top: 1px dashed #ccc;
+            border-bottom: 1px dashed #ccc;
+            padding: 5px 0;
+            background-color: #fff8e1; /* Sfondo leggero per evidenziare */
+        }
+        
+        /* Link/pulsante per i marcatori della semifinale (NUOVO) */
+        .semifinal-scorers {
+            cursor: pointer;
+            color: #d84315; /* Colore arancione scuro per l'azione */
+            font-weight: bold;
+            font-size: 0.8em;
+            text-decoration: underline;
+            margin-top: 5px;
+            transition: color 0.2s;
+        }
+        
+        .semifinal-scorers:hover {
+            color: var(--colore-primario);
         }
 
         .semifinal .match-up {
@@ -455,16 +488,16 @@
                 </tr>
             </thead>
             <tbody>
-                <tr><td>1°</td><td>Diego Pisapia</td><td>Ars</td><td>11</td><td>6</td></tr>
-                <tr><td>2°</td><td>Rocco Livorno</td><td>BVB</td><td>9</td><td>5</td></tr>
+                <tr><td>1°</td><td>Diego Pisapia</td><td>Ars</td><td>13</td><td>7</td></tr>
+                <tr><td>2°</td><td>Rocco Livorno</td><td>BVB</td><td>9</td><td>6</td></tr>
                 <tr><td>3°</td><td>Emanuele Tesauro</td><td>NM</td><td>9</td><td>3</td></tr>
-                <tr><td>4°</td><td>Ciro Scarpato</td><td>Rma</td><td>8</td><td>3</td></tr>
-                <tr><td>5°</td><td>Pietro Trotta</td><td>Rma</td><td>7</td><td>4</td></tr>
-                <tr><td>6°</td><td>Giuseppe Palmieri</td><td>NM</td><td>7</td><td>4</td></tr>
-                <tr><td>7°</td><td>Francesco Fornaro</td><td>Ars</td><td>7</td><td>5</td></tr>
-                <tr><td>8°</td><td>Antonio Corcione</td><td>Ars</td><td>7</td><td>5</td></tr>
-                <tr><td>9°</td><td>Luca Di Tuccio</td><td>NM</td><td>5</td><td>3</td></tr>
-                <tr><td>10°</td><td>Gabriele Rossini</td><td>NM</td><td>4</td><td>4</td></tr>
+                <tr><td>4°</td><td>Antonio Corcione</td><td>Ars</td><td>9</td><td>6</td></tr>
+                <tr><td>5°</td><td>Ciro Scarpato</td><td>Rma</td><td>8</td><td>3</td></tr>
+                <tr><td>6°</td><td>Pietro Trotta</td><td>Rma</td><td>7</td><td>4</td></tr>
+                <tr><td>7°</td><td>Giuseppe Palmieri</td><td>NM</td><td>7</td><td>4</td></tr>
+                <tr><td>8°</td><td>Francesco Fornaro</td><td>Ars</td><td>7</td><td>6</td></tr>
+                <tr><td>9°</td><td>Lorenzo Terracciano</td><td>NM</td><td>5</td><td>5</td></tr>
+                <tr><td>10°</td><td>Luca Di Tuccio</td><td>NM</td><td>5</td><td>3</td></tr>
             </tbody>
         </table>
 
@@ -482,15 +515,15 @@
                 </tr>
             </thead>
             <tbody>
-                <tr><td>1°</td><td>Antonio Corcione</td><td>Ars</td><td>5</td><td>5</td></tr>
-                <tr><td>2°</td><td>Giacomo Intiso</td><td>Ars</td><td>4</td><td>5</td></tr>
-                <tr><td>3°</td><td>Diego Pisapia</td><td>Ars</td><td>4</td><td>6</td></tr>
-                <tr><td>4°</td><td>Lorenzo Terracciano</td><td>Ars</td><td>4</td><td>4</td></tr>
+                <tr><td>1°</td><td>Diego Pisapia</td><td>Ars</td><td>6</td><td>7</td></tr>
+                <tr><td>2°</td><td>Antonio Corcione</td><td>Ars</td><td>5</td><td>6</td></tr>
+                <tr><td>3°</td><td>Giacomo Intiso</td><td>Ars</td><td>4</td><td>6</td></tr>
+                <tr><td>4°</td><td>Lorenzo Terracciano</td><td>Ars</td><td>4</td><td>5</td></tr>
                 <tr><td>5°</td><td>Pietro Trotta</td><td>Rma</td><td>3</td><td>4</td></tr>
-                <tr><td>6°</td><td>Sandro Colella</td><td>NM</td><td>2</td><td>2</td></tr>
-                <tr><td>7°</td><td>Ciro Scarpato</td><td>Rma</td><td>2</td><td>3</td></tr>
+                <tr><td>6°</td><td>Francesco Fornaro</td><td>Ars</td><td>3</td><td>6</td></tr>
+                <tr><td>7°</td><td>Sandro Colella</td><td>NM</td><td>2</td><td>2</td></tr>
                 <tr><td>8°</td><td>Giuseppe Palmieri</td><td>NM</td><td>2</td><td>4</td></tr>
-                <tr><td>9°</td><td>Francesco Fornaro</td><td>Ars</td><td>2</td><td>5</td></tr>
+                <tr><td>9°</td><td>Luca Di Tuccio</td><td>NM</td><td>2</td><td>3</td></tr>
                 <tr><td>10°</td><td>Emanuele Tesauro</td><td>NM</td><td>2</td><td>3</td></tr>
             </tbody>
         </table>
@@ -509,23 +542,26 @@
                 </tr>
             </thead>
             <tbody>
-                <tr><td>1°</td><td>Christian Ianiello</td><td>BVB</td><td>21</td><td>5</td></tr>
-                <tr><td>2°</td><td>Daniel Paudice</td><td>NM</td><td>24</td><td>5</td></tr>
-                <tr><td>3°</td><td>Simone Argenziano</td><td>Ars</td><td>29</td><td>5</td></tr>
+                <tr><td>1°</td><td>Daniele Paudice</td><td>NM</td><td>24</td><td>5</td></tr>
+                <tr><td>2°</td><td>Christian Ianiello</td><td>BVB</td><td>27</td><td>6</td></tr>
+                <tr><td>3°</td><td>Simone Argenziano</td><td>Ars</td><td>31</td><td>6</td></tr>
                 <tr><td>4°</td><td>Salvatore Giustezza</td><td>Rma</td><td>42</td><td>6</td></tr>
             </tbody>
         </table>
 
         <hr>
-
         <div class="container elimination-phase">
             <h2>Fase ad Eliminazione Diretta 🏆</h2>
             <div class="bracket-container">
                 
                 <div class="semifinal">
                     <div class="match-up">
-                        <div class="team-box">Arsenal  6</div>
-                        <div class="team-box">Borussia Dortmund  2</div>
+                        <div class="team-box">Arsenal</div>
+                        <div class="semifinal-result">6 - 2</div>
+                        <div class="semifinal-scorers" onclick="showEliminationScorers('semifinale-1')">
+                            ▶ Vedi i Marcatori
+                        </div>
+                        <div class="team-box">Borussia Dortmund</div>
                         <div class="connector"></div>
                     </div>
                 </div>
@@ -533,20 +569,20 @@
                 <div class="final">
                     <div class="match-up">
                         <div class="team-box">Napoli Matches</div>
-                        <div class="team-box">Arsenal</div>
+                        <div class="team-box" style="background-color: #0d7f6c;">Arsenal</div> 
                     </div>
                 </div>
 
             </div>
             <p style="margin-top: 50px;">
-                La finale della Tav Master Cup si avvicina!
+                L'Arsenal raggiunge il Napoli Matches nella finale della Tav Master Cup!
             </p>
         </div>
 
     </div>
 
     <script>
-        // DATI SQUADRE PER AGGIORNAMENTO 1
+        // DATI SQUADRE PER AGGIORNAMENTO 1 (Mantenuti inalterati)
         const teamsData = {
             'Arsenal': {
                 rosa: [
@@ -564,6 +600,7 @@
                     'Nr. 20 Francesco Napolitano - Attacante'
                 ],
                 risultati: [
+                    'Arsenal 6-2 Borussia Dortmund (semifinale)'
                     'Real Madrid 1-9 Arsenal',
                     'Arsenal 2-5 Borussia Dortmund',
                     'Arsenal 9-7 Napoli Matches'
@@ -589,6 +626,7 @@
                     'Nr. 77 Rocco Livorno'
                 ],
                 risultati: [
+                    'Arsenal 6-2 Borussia Dortmund (semifinale)'
                     'Napoli Matches 0-3 Borussia Dortmund (a tavolino)',
                     'Arsenal 2-5 Borussia Dortmund',
                     'Borussia Dortmund 3-4 Real Madrid'
@@ -682,7 +720,20 @@
                 statisticheHtml);
         }
 
-        // DATI NOTIZIE PER AGGIORNAMENTO 2 (Dalla più recente alla meno recente)
+        // Dati Marcatori Semifinale (NUOVO)
+        const eliminationMarcatori = {
+            'semifinale-1': "SEMIFINALE: Arsenal 6-2 Borussia Dortmund\n\nARS: Diego Pisapia (x2), Antonio Corcione (x2), Giacomo Intiso (x1), Lorenzo Terracciano (x1)\n\nBVB: Gennaro Cozzolino (x2)"
+        };
+        
+        // Funzione per mostrare i marcatori della Fase a Eliminazione Diretta (NUOVO)
+        function showEliminationScorers(matchId) {
+            const marcatori = eliminationMarcatori[matchId];
+            if (marcatori) {
+                alert("⭐ MARCATORI SEMIFINALE ⭐\n\n" + marcatori);
+            }
+        }
+
+        // DATI NOTIZIE PER AGGIORNAMENTO 2 (Mantenuti inalterati)
         const newsData = [
             { data: '28 ottobre 2025', testo: 'La Finale tra Napoli Matches (Vincente fase a campionato) e Arsenal(Vincente semifinali) probabilmente si giocherà Domenica 2 Novembre ore 22' },
             { data: '4 ottobre 2025', testo: 'La semifinale tra Arsenal e Borussia Dortmund si giocherà il 4 ottobre alle 19:30, FCS' },
@@ -715,7 +766,7 @@
             { data: '18 luglio 2025', testo: 'Francesco Giobbe all\'Arsenal (acquisto)' },
             { data: '18 luglio 2025', testo: 'Alex Ciocia al Napoli Matches (acquisto)' },
             { data: '18 luglio 2025', testo: 'Emanuele Morra svincolato dal Napoli Matches (svincolo) *non contato come svincolo visto che era un portiere' },
-            { data: '13 luglio 2025', testo: 'Biagio Saccone all\'Arsenal (acquisto) *non contato come acquisto visto che è un portiere' },
+            { data: '13 luglio 2025', testo: 'Biagio Saccone all\'Arsenal (acquisto) *non contato come svincolo visto che è un portiere' },
             { data: '12 luglio 2025', testo: 'Gabriele Rossini al Napoli Matches (acquisto)' },
             { data: '12 luglio 2025', testo: 'Sandro Colella al Napoli Matches (acquisto)' },
             { data: '9 luglio 2025', testo: 'Emilio Madonna svincolato dal Real Madrid (svincolo)' },
@@ -736,7 +787,7 @@
             { data: '22 marzo 2025', testo: 'Inizia il progetto della TAV MASTER CUP' }
         ];
 
-        // Funzione per generare e mostrare le notizie
+        // Funzione per generare e mostrare le notizie (Mantenuta inalterata)
         function generateNews() {
             const newsContainer = document.getElementById('news-content');
             let newsHtml = '';
@@ -753,7 +804,7 @@
             newsContainer.innerHTML = newsHtml;
         }
         
-        // Funzione per espandere/comprimere la sezione Notizie
+        // Funzione per espandere/comprimere la sezione Notizie (Mantenuta inalterata)
         function toggleNews() {
             const content = document.getElementById('news-content');
             content.classList.toggle('active');
@@ -766,7 +817,7 @@
             }
         }
         
-        // Mappa dei marcatori (Mantenuta inalterata)
+        // Mappa dei marcatori della Fase a Campionato (Mantenuta inalterata)
         const marcatoriPartite = {
             'g1-p1': "Arsenal 6-8 Real Madrid\n\nARS: Diego Pisapia (x2), Derlyn Feliz (x2), Lorenzo Terracciano (x1), Davide Tene (x1)\n\nRMA: Pietro Trotta (x5), Ciro Scarpato (x1), Sabino Corcione (x1), Gabriele Rossini (x1)",
             'g1-p2': "Borussia Dortmund 2-4 Napoli Matches\n\nBVB: Raffaele Caiazzo (x1), Rocco Livorno (x1)\n\nNM: Francesco Fornaro (x3), Emanuele Tesauro (x1)",
@@ -832,7 +883,3 @@
     </script>
 </body>
 </html>
-
-
-
-
